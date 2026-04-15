@@ -13,3 +13,4 @@
 ---
 
 오류 제보:
+https://github.com/pond3333/kanji_flashcard/issues/1
