@@ -201,7 +201,7 @@ body { font-family: sans-serif; background: var(--bg); color: var(--text); trans
       <div id="readings" class="hidden">
         <div class="row"><span class="label">音読み</span><span id="r-onyomi"></span></div>
         <div class="row"><span class="label">訓読み</span><span id="r-kunyomi"></span></div>
-        <div class="row"><span class="label">한국어</span><span id="r-korean"></span></div>
+        <div class="row"><span class="label">한국어</span><span id="r-korean"></span><span id="r-index" style="margin-left:auto;font-size:0.78rem;color:var(--dim);"></span></div>
       </div>
     </div>
     <div id="right-col">
@@ -357,6 +357,7 @@ function renderCard() {
   document.getElementById('r-kunyomi').textContent      = card.u || '—';
   document.getElementById('r-korean').textContent       =
     (card.m && card.r) ? `${card.m} ${card.r}` : (card.m || card.r || '—');
+  document.getElementById('r-index').textContent        = '#' + String(card.i).padStart(4, '0');
   document.getElementById('examples').innerHTML = card.e.slice(0, 5).map(([w, r, k]) => `
     <div class="example">
       <div><div class="ex-word">${w}</div><div class="ex-reading">${r}</div></div>
