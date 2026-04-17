@@ -156,6 +156,31 @@ body { font-family: sans-serif; background: var(--bg); color: var(--text); trans
 #btn-next { grid-column: 1 / -1; }
 
 .hidden { visibility: hidden; }
+/* ── Kanji List ── */
+#screen-list { gap: 0; }
+#list-header {
+  display: flex; align-items: center; gap: 12px;
+  padding-bottom: 10px; border-bottom: 1px solid var(--border); margin-bottom: 12px;
+}
+#list-header h2 { font-size: 1.1rem; }
+#kanji-list { overflow-y: auto; flex: 1; }
+.kl-group-title {
+  font-weight: bold; font-size: 0.85rem;
+  padding: 6px 0; border-bottom: 1px solid var(--border2); margin-bottom: 4px;
+  color: var(--text); position: sticky; top: 0; background: var(--bg);
+}
+.kl-row {
+  display: grid; grid-template-columns: 2.2rem 1fr auto;
+  gap: 8px; align-items: center; padding: 8px 0;
+  border-bottom: 1px solid var(--border3);
+}
+.kl-row:last-child { border-bottom: none; }
+.kl-kanji { font-size: 1.8rem; line-height: 1; text-align: center; }
+.kl-info  { display: flex; flex-direction: column; gap: 2px; }
+.kl-korean { font-size: 0.95rem; }
+.kl-readings { font-size: 0.75rem; color: var(--dim); }
+.kl-meta  { font-size: 0.72rem; color: var(--dim); text-align: right; white-space: nowrap; }
+
 </style>
 </head>
 <body>
@@ -168,6 +193,7 @@ body { font-family: sans-serif; background: var(--bg); color: var(--text); trans
   <p class="subtitle">2136개 한자 플래시카드</p>
   <button class="home-btn" onclick="openPlan('ganada')">가나다 순 ㄱ→ㅎ</button>
   <button class="home-btn" onclick="openPlan('jlpt')">JLPT 순 N5→N1</button>
+  <button class="home-btn" onclick="openList()">한자 목록</button>
 
   <div id="home-footer">
     <div class="footer-title">공지사항</div>
@@ -182,6 +208,16 @@ body { font-family: sans-serif; background: var(--bg); color: var(--text); trans
     <h2 id="plan-title"></h2>
   </div>
   <div id="plan-list" style="overflow-y:auto; flex:1;"></div>
+</div>
+
+
+<!-- LIST -->
+<div id="screen-list" class="screen">
+  <div id="list-header">
+    <button class="btn-back" onclick="showScreen('home')">← 홈</button>
+    <h2>한자 목록 (가나다 순)</h2>
+  </div>
+  <div id="kanji-list"></div>
 </div>
 
 <!-- STUDY -->
@@ -277,6 +313,33 @@ function toggleDark() {
 // ── Notices ───────────────────────────────────────────────────────────────────
 document.getElementById('notices-list').innerHTML =
   NOTICES.map(n => `<li>${n}</li>`).join('');
+
+
+// ── Kanji List ────────────────────────────────────────────────────────────────
+function openList() {
+  const sorted = [...CARDS].sort((a, b) => (a.r || a.k).localeCompare(b.r || b.k, 'ko'));
+  const container = document.getElementById('kanji-list');
+  const html = [];
+  let lastC = null;
+  for (const card of sorted) {
+    const c = initialConsonant(card.r || '');
+    if (c !== lastC) {
+      lastC = c;
+      html.push(`<div class="kl-group-title">${c}</div>`);
+    }
+    const korean = (card.m && card.r) ? `${card.m} ${card.r}` : (card.m || card.r || '—');
+    html.push(`<div class="kl-row">
+      <div class="kl-kanji">${card.k}</div>
+      <div class="kl-info">
+        <div class="kl-korean">${korean}</div>
+        <div class="kl-readings">音 ${card.o || '—'} &nbsp; 訓 ${card.u || '—'}</div>
+      </div>
+      <div class="kl-meta">#${String(card.i).padStart(4,'0')}<br>${card.j}</div>
+    </div>`);
+  }
+  container.innerHTML = html.join('');
+  showScreen('list');
+}
 
 // ── Plans ─────────────────────────────────────────────────────────────────────
 function buildGanadaPlan() {
