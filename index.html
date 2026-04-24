@@ -34,6 +34,17 @@ body { font-family: sans-serif; background: var(--bg); color: var(--text); trans
 .screen.active { display: flex; flex-direction: column; }
 
 /* ── Dark mode toggle ── */
+#btn-kakikata {
+  position: fixed; top: 12px; right: 90px;
+  border: 1px solid var(--border); background: var(--bg); color: var(--text);
+  padding: 4px 10px; cursor: pointer; font-size: 0.82rem; z-index: 999;
+  display: none;
+}
+#btn-kakikata.visible { display: inline-block; }
+#btn-kakikata:hover { background: var(--hover); }
+#kanji-display img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; }
+[data-theme="dark"] #kanji-display img { filter: invert(1); }
+
 #dark-toggle {
   position: fixed; top: 12px; right: 12px;
   border: 1px solid var(--border); background: var(--bg); color: var(--text);
@@ -117,6 +128,7 @@ body { font-family: sans-serif; background: var(--bg); color: var(--text); trans
 #kanji-display {
   font-size: 96px; line-height: 1; text-align: center; flex: 1;
   display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
 }
 #readings {
   border-top: 1px solid var(--border2); padding-top: 8px;
@@ -185,6 +197,7 @@ body { font-family: sans-serif; background: var(--bg); color: var(--text); trans
 </head>
 <body>
 
+<button id="btn-kakikata" onclick="toggleKakikata()">획순 ▶</button>
 <button id="dark-toggle" onclick="toggleDark()">다크모드</button>
 
 <!-- HOME -->
@@ -290,6 +303,7 @@ function shuffle(arr) {
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + name).classList.add('active');
+  if (name !== 'study') document.getElementById('btn-kakikata').classList.remove('visible');
 }
 
 // ── Dark mode ─────────────────────────────────────────────────────────────────
@@ -403,6 +417,7 @@ function openPlan(planId) {
 }
 
 function openStudy(setIdx) {
+  document.getElementById('btn-kakikata').classList.add('visible');
   currentSetIdx  = setIdx;
   currentCardIdx = 0;
   shuffledCards  = shuffle(currentPlan.sets[setIdx].cards);
@@ -410,12 +425,31 @@ function openStudy(setIdx) {
   renderCard();
 }
 
+
+// ── Kakikata ───────────────────────────────────────────────────────────────────
+let kakikataGif = false;
+
+function toggleKakikata() {
+  kakikataGif = !kakikataGif;
+  document.getElementById('btn-kakikata').textContent = kakikataGif ? '획순 ■' : '획순 ▶';
+  renderKanjiDisplay();
+}
+
+function renderKanjiDisplay() {
+  const card = shuffledCards[currentCardIdx];
+  const el   = document.getElementById('kanji-display');
+  const src  = kakikataGif
+    ? `kakikata/${card.k}.gif`
+    : `static/${card.k}.png`;
+  el.innerHTML = `<img src="${src}" alt="${card.k}">`;
+}
+
 function renderCard() {
   const set  = currentPlan.sets[currentSetIdx];
   const card = shuffledCards[currentCardIdx];
   document.getElementById('study-title').textContent    = set.label;
   document.getElementById('study-progress').textContent = `${currentCardIdx + 1} / ${shuffledCards.length}`;
-  document.getElementById('kanji-display').textContent  = card.k;
+  renderKanjiDisplay();
   document.getElementById('r-onyomi').textContent       = card.o || '—';
   document.getElementById('r-kunyomi').textContent      = card.u || '—';
   document.getElementById('r-korean').textContent       =
