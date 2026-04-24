@@ -16,12 +16,12 @@
       <td width="50%" align="center"><img src="https://github.com/pond3333/kanji_flashcard/blob/main/Screenshots/2.png?raw=true" width="300"><p>플래시카드 화면입니다. 상단에는 순서대로 <b>목록</b> 돌아가기 버튼, 현재 공부 중인 챕터, 챕터 진행도, <b>획순</b>(움짤) 버튼, <b>다크모드</b> 버튼이 있습니다. </p></td>
     </tr>
   <tr>
-    <td width="50%" align="center"><img src="https://github.com/pond3333/kanji_flashcard/blob/main/Screenshots/3.png?raw=true" width="300"><p><b>획순</b> 버튼을 누르면 움짤이 반복해서 재생됩니다.</p></td>
-      <td width="50%" align="center"><img src="https://github.com/pond3333/kanji_flashcard/blob/main/Screenshots/4.png?raw=true" width="300"><p><b>예문 보기</b> 버튼을 누르면 한자 사용 예시가 표시됩니다.</p></td>
+    <td width="50%" align="center"><img src="https://github.com/pond3333/kanji_flashcard/blob/main/Screenshots/3.png?raw=true" width="300"><p><b>획순</b> 버튼을 누르면 획순이 반복해서 재생됩니다.</p></td>
+      <td width="50%" align="center"><img src="https://github.com/pond3333/kanji_flashcard/blob/main/Screenshots/4.png?raw=true" width="300"><p><b>예문 보기</b>(숨기기) 버튼을 누르면 한자 사용 예시가 표시됩니다.</p></td>
   </tr>
    <tr>
-    <td width="50%" align="center"><img src="https://github.com/pond3333/kanji_flashcard/blob/main/Screenshots/5.png?raw=true" width="300"><p><b>정답 보기</b> 버튼을 누르면 전체 내용이 표시됩니다.</p></td>
-      <td width="50%" align="center"><img src="https://github.com/pond3333/kanji_flashcard/blob/main/Screenshots/7.png?raw=true" width="300"><p>다크 모드입니다.</p></td>
+    <td width="50%" align="center"><img src="https://github.com/pond3333/kanji_flashcard/blob/main/Screenshots/5.png?raw=true" width="300"><p><b>정답 보기</b>(숨기기) 버튼을 누르면 전체 내용이 표시됩니다.</p></td>
+      <td width="50%" align="center"><img src="https://github.com/pond3333/kanji_flashcard/blob/main/Screenshots/7.png?raw=true" width="300"><p><b>다크모드</b>(라이트모드)입니다.</p></td>
   </tr>
    
 </table> 
